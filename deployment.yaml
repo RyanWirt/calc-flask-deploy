@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: calc-deploy
+  namespace: calc-deploy
+  labels:
+    app: calc-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: calc-deploy
+  template:
+    metadata:
+      labels:
+        app: calc-deploy
+    spec:
+      containers:
+        - name: calc-deploy
+          image: quay.apps.ocp-prod.nnlscience.onmicrosoft.com/datascience/vllm:calc-deploy
+          imagePullPolicy: Always
+          resources:
+            requests:
+              cpu: 500m
+              memory: 750Mi
+            limits:
+              cpu: 2
+              memory: 1.5Gi
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      serviceAccountName: calc-deploy
+
