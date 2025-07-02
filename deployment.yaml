@@ -1,36 +1,38 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: calc-deploy
-  namespace: calc-deploy
+  name: calc-deployment
+  namespace: calc-deployment
   labels:
-    app: calc-deploy
+    app: calc-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: calc-deploy
+      app: calc-deployment
   template:
     metadata:
       labels:
-        app: calc-deploy
+        app: calc-deployment
     spec:
       containers:
-        - name: calc-deploy
+        - name: calc-deployment
           image: quay.apps.ocp-prod.nnlscience.onmicrosoft.com/datascience/vllm:calc-deploy
+          ports:
+            - containerPort: 5000
+              protocol: TCP
           imagePullPolicy: Always
           resources:
             requests:
               cpu: 500m
               memory: 750Mi
             limits:
-              cpu: 2
+              cpu: '1'
               memory: 1.5Gi
-          securityContext:
-            runAsUser: 1000
-            runAsGroup: 1000
+          imagePullSecrets:
+            - name: calc-deploy-secret
       securityContext:
         seccompProfile:
           type: RuntimeDefault
-      serviceAccountName: calc-deploy
+      serviceAccountName: default
 

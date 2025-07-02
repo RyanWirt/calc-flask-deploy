@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: calc-deploy
-  namespace: calc-deploy
+  name: calc-deployment
+  namespace: calc-deployment
   labels:
-    app: calc-deploy
+    app: calc-deployment
 spec:
   selector:
-    app: calc-deploy
+    app: calc-deployment
   type: ClusterIP
   ports:
     - protocol: TCP

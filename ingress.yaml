@@ -1,8 +1,8 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: calc-deploy
-  namespace: calc-deploy
+  name: calc-deployment
+  namespace: calc-deployment
   annotations:
     route.openshift.io/termination: 'edge'
     'haproxy.router.openshift.io/rate-limit-connections': 'true'
@@ -14,7 +14,7 @@ spec:
         paths:
           - backend:
               service:
-                name: calc-deploy
+                name: calc-deployment
                 port:
                   number: 80
             path: /
